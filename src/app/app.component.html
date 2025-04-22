@@ -1,8 +1,15 @@
 <main class="p-[3.25vw]">
-  <div class="grid grid-cols-5 grid-rows-2 w-full gap-[2vw]">
-    <app-card *ngFor="let pokemon of pokemonList" [pokemon]="pokemon"></app-card>
+  <div class="grid grid-cols-5 grid-rows-2 w-full gap-[2vw] relative min-h-64">
+    <div *ngIf="isWaitingForResponse; then loading; else showCard"></div>
+    <ng-template #loading>
+      <app-loading class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></app-loading>
+    </ng-template>
+    <ng-template #showCard>
+      <app-card *ngFor="let pokemon of pokemonList" [pokemon]="pokemon"></app-card>
+    </ng-template>
   </div>
   <app-pagination
+    *ngIf="pokemonList?.length"
     [totalItems]="totalItems"
     [currentPage]="currentPage"
     (pageChange)="onPageChange($event)"

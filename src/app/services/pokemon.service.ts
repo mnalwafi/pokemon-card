@@ -21,6 +21,7 @@ export class PokemonService {
   }
 
   private transformPokemonData(data: any): Pokemon {
+    // console.log(data);
     return {
       id: data.id,
       name: data.name,
@@ -28,6 +29,8 @@ export class PokemonService {
       type: data.types.map((type: any) => type.type.name), // types as an array of strings
       height: data.height / 10, // height in meters
       weight: data.weight / 10, // weight in kilograms
+      abilities: data.abilities,
+      moves: data.moves
     };
   }
 }

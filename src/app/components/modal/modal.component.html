@@ -1,0 +1,95 @@
+<!-- modal.component.html -->
+<div *ngIf="modalService.isOpen$ | async">
+    <div
+      *ngIf="selectedPokemon$ | async as selectedPokemon"
+      class="fixed inset-0 w-full h-full bg-black bg-opacity-40 z-50"
+      (click)="modalService.close()"
+    >
+      <div
+        class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-lg mx-auto px-4 h-[740px]"
+        (click)="$event.stopPropagation()"
+      >
+        <div class="bg-white rounded-md shadow-lg h-full">
+          <div class="flex items-center justify-between p-4 border-b">
+            <h2 class="text-lg font-medium text-gray-800">Pokémon Detail</h2>
+            <button
+              (click)="modalService.close()"
+              class="p-2 text-gray-400 rounded-md hover:bg-gray-100"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5 mx-auto"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+  
+          <div class="space-y-4 p-4 text-[15.5px] text-gray-800">
+            <!-- Nomor Pokémon -->
+            <div class="text-center">
+              <div class="text-sm text-gray-500">Pokémon No.</div>
+              <div class="text-xl font-semibold">
+                #{{ selectedPokemon.id < 100 ? (selectedPokemon.id < 10 ? '00' : '0') : '' }}{{ selectedPokemon.id }}
+              </div>
+            </div>
+  
+            <!-- Gambar Pokémon -->
+            <div class="flex justify-center">
+              <img
+                [src]="selectedPokemon.img"
+                [alt]="selectedPokemon.name"
+                class="w-40 h-40 object-contain"
+              />
+            </div>
+  
+            <!-- Nama Pokémon -->
+            <div class="text-center capitalize text-2xl font-semibold">
+              {{ selectedPokemon.name }}
+            </div>
+  
+            <!-- Berat dan Tinggi -->
+            <div class="flex justify-between text-sm text-gray-600">
+              <div>Weight: {{ (selectedPokemon.weight / 10).toFixed(2) }} kg</div>
+              <div>Height: {{ (selectedPokemon.height / 10).toFixed(2) }} m</div>
+            </div>
+  
+            <!-- Tipe Pokémon -->
+            <div>
+              <span class="font-medium">Type:</span>
+              <span class="capitalize">
+                {{ selectedPokemon.type}}
+              </span>
+            </div>
+  
+            <!-- Abilities -->
+            <div>
+              <span class="font-medium">Abilities:</span>
+              <ul class="list-disc list-inside capitalize max-h-[48px] overflow-y-auto">
+                <li *ngFor="let ab of selectedPokemon.abilities">
+                  {{ ab.ability.name }}
+                </li>
+              </ul>
+            </div>
+  
+            <!-- Moves -->
+            <div>
+              <span class="font-medium">Moves:</span>
+              <ul class="list-disc list-inside max-h-[160px] overflow-y-auto capitalize">
+                <li *ngFor="let move of selectedPokemon.moves">
+                  {{ move.move.name }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

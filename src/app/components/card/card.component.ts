@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Pokemon } from '../../models/pokemon.model';
 import { NgClass, NgFor } from '@angular/common';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-card',
@@ -11,6 +12,8 @@ import { NgClass, NgFor } from '@angular/common';
 
 export class CardComponent {
   @Input() pokemon!: Pokemon;
+
+  constructor(private modalService: ModalService) {}
 
   typeColors: { [key: string]: string } = {
     normal: '#D5D5A7',
@@ -37,6 +40,10 @@ export class CardComponent {
     const type = this.pokemon.type?.[0];
     const hex = this.typeColors[type];
     return `bg-[${hex}]`;
+  }
+
+  openModal() {
+    this.modalService.open(this.pokemon);
   }
 }
 

@@ -5,13 +5,13 @@ import { Pokemon } from './models/pokemon.model';
 import { NgFor, NgIf } from '@angular/common';
 import { PokemonService } from './services/pokemon.service';
 import { PaginationComponent } from "./components/pagination/pagination.component";
-import { console } from 'inspector';
-import { LoadingComponent } from "./components/loading/loading.component";
+import { ModalComponent } from "./components/modal/modal.component";
+import { ModalService } from './services/modal.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CardComponent, NgFor, PaginationComponent, LoadingComponent, NgIf],
+  imports: [CardComponent, NgFor, PaginationComponent, ModalComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
   currentPage: number = 1;
   maxPokemon: number = 151;
 
-  constructor(private pokemonService: PokemonService) {}
+  constructor(private pokemonService: PokemonService, private modalService: ModalService) {}
 
   ngOnInit(): void {
     this.getAllPokemon();
@@ -45,7 +45,6 @@ export class AppComponent implements OnInit {
       this.pokemonList.push(data);
       this.pokemonList.sort((a, b) => a.id - b.id);
     });
-
   }
 
   onPageChange(page: number) {

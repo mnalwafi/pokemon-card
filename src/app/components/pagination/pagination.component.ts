@@ -27,7 +27,7 @@ export class PaginationComponent implements OnChanges, OnInit{
     this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
     this.pages = this.generatePages(this.currentPage, this.totalPages);
   }
-
+  
   setCurrentPage(page: number | string) {
     if (typeof page === 'number') {
       this.currentPage = page;
@@ -90,5 +90,4 @@ export class PaginationComponent implements OnChanges, OnInit{
   
     return pages;
   }
-  
 }

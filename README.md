@@ -5,8 +5,8 @@ This project was generated with Angular CLI version 18.2.3.
 ## Installation
 
 1. Clone the repository:
-   gh repo clone mnalwafi/pokemon-card
-   cd pokemon-card
+   ```gh repo clone mnalwafi/pokemon-card```
+   ```cd pokemon-card```
 
 2. Install dependencies:
    npm i

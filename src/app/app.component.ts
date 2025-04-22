@@ -7,11 +7,13 @@ import { PokemonService } from './services/pokemon.service';
 import { PaginationComponent } from "./components/pagination/pagination.component";
 import { ModalComponent } from "./components/modal/modal.component";
 import { ModalService } from './services/modal.service';
+import { forkJoin } from 'rxjs';
+import { LoadingComponent } from "./components/loading/loading.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CardComponent, NgFor, PaginationComponent, ModalComponent],
+  imports: [CardComponent, NgFor, PaginationComponent, ModalComponent, LoadingComponent, NgIf],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -21,6 +23,8 @@ export class AppComponent implements OnInit {
   totalItems: number = 0;
   currentPage: number = 1;
   maxPokemon: number = 151;
+
+  isWaitingForResponse: boolean = false;
 
   constructor(private pokemonService: PokemonService, private modalService: ModalService) {}
 
@@ -32,18 +36,20 @@ export class AppComponent implements OnInit {
     this.pokemonService?.getAllPokemon().subscribe((data) => {
       this.totalItems = data?.length;
     });
+  
+    const start = 1 + (this.currentPage - 1) * 10;
+    const end = Math.min(start + 9, this.maxPokemon);
+  
+    const requests = [];
+    for (let id = start; id <= end; id++) {
+      requests.push(this.pokemonService.getPokemon(id));
+    }
+  
+    this.isWaitingForResponse = true;
 
-    for (let index = (1 + (this.currentPage - 1) * 10); index < (11 + (this.currentPage - 1) * 10); index++) {
-      if (index <= this.maxPokemon) {
-        this.fetchPokemonData(index);
-      }
-    };
-  }
-
-  fetchPokemonData(id: number) {
-    this.pokemonService.getPokemon(id).subscribe((data) => {
-      this.pokemonList.push(data);
-      this.pokemonList.sort((a, b) => a.id - b.id);
+    forkJoin(requests).subscribe((pokemonArray) => {
+      this.pokemonList = pokemonArray.sort((a, b) => a.id - b.id);
+      this.isWaitingForResponse = false;
     });
   }
 

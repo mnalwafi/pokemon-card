@@ -4,9 +4,9 @@
         SHOWING {{ from }} - {{ to }} OF {{ totalItems }}
       </div>
       <div class="flex items-center gap-12" aria-label="Pagination">
-        <a (click)="previousPage()" class="hover:text-indigo-600 cursor-pointer">
+        <button (click)="previousPage()" [disabled]="currentPage === 1" [ngClass]="currentPage === 1 ? 'text-gray-300 cursor-default' : 'hover:text-indigo-600 cursor-pointer'">
           Previous
-        </a>
+        </button>
         <ul class="flex items-center gap-1 w-[240px] justify-center">
           <li *ngFor="let page of pages">
             <div *ngIf="page === '...'; else pageLink">
@@ -25,9 +25,9 @@
             </ng-template>
           </li>
         </ul>
-        <a (click)="nextPage()" class="hover:text-indigo-600 cursor-pointer">
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages" [ngClass]="currentPage === totalPages ? 'text-gray-300 cursor-default' : 'hover:text-indigo-600 cursor-pointer'">
           Next
-        </a>
+        </button>
       </div>
     </div>
   

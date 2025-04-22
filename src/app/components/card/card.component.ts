@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Pokemon } from '../../models/pokemon.model';
-import { NgClass, NgFor, NgStyle } from '@angular/common';
+import { NgClass, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-card',

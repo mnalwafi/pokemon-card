@@ -1,0 +1,22 @@
+<article
+    [ngClass]="getBackgroundClass()"
+    class="flex rounded-[1vw] border-black border-[.2vw] w-full aspect-[5/7] p-[1.1vw] flex-col items-center cursor-pointer justify-between select-none">
+    <section class="flex flex-col items-center gap-[0.8vw] self-stretch">
+        <p class="self-stretch text-[1.1vw]">#{{ pokemon.id ? pokemon.id : '000' }}</p>
+        <div class="flex flex-col items-center gap-[.4vw]">
+            <h3 class="text-[1.715vw] font-syne font-bold">{{ pokemon.name ? pokemon.name : 'unnamed' }}</h3>
+            <div class="flex item-center gap-[.75vw]">
+                <img *ngFor="let type of pokemon.type" [src]="(type ? type : 'undefined') + '.png'"
+                    [alt]="(type ? type : 'normal') + ' type'" class="size-[2.3vw]">
+            </div>
+        </div>
+    </section>
+    <figure class="size-[10vw]">
+        <img [src]="pokemon.img" [alt]="pokemon.name" class="size-full">
+        <figcaption class="hidden">{{ pokemon.name }}</figcaption>
+    </figure>
+    <section class="flex justify-between items-center self-stretch">
+        <p class="text-[1.1vw]">{{ (pokemon.weight / 10).toFixed(2) + ' kg' }}</p>
+        <p class="text-[1.1vw]">{{ (pokemon.height / 10).toFixed(2) + ' m' }}</p>
+    </section>
+</article>

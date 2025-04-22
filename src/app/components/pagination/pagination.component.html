@@ -13,15 +13,16 @@
               <div class="px-3 py-2 text-gray-500">...</div>
             </div>
             <ng-template #pageLink>
-              <a
+              <button
+                [disabled]="page === currentPage"
                 (click)="setCurrentPage(page)"
                 class="px-3 py-2 rounded-lg duration-150 hover:text-white hover:bg-indigo-600 cursor-pointer"
                 [ngClass]="{
-                  'bg-indigo-600 text-white font-medium': page === currentPage
+                  'bg-indigo-600 text-white font-medium cursor-default': page === currentPage
                 }"
               >
                 {{ page }}
-              </a>
+            </button>
             </ng-template>
           </li>
         </ul>

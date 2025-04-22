@@ -2,4 +2,9 @@
   <div class="grid grid-cols-5 grid-rows-2 w-full gap-[2vw]">
     <app-card *ngFor="let pokemon of pokemonList" [pokemon]="pokemon"></app-card>
   </div>
+  <app-pagination
+    [totalItems]="totalItems"
+    [currentPage]="currentPage"
+    (pageChange)="onPageChange($event)"
+  ></app-pagination>
 </main>

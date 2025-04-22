@@ -1,0 +1,43 @@
+<div class="max-w-screen-xl mx-auto mt-12 px-4 text-gray-600 md:px-8">
+    <div class="hidden justify-between text-sm md:flex">
+      <div>
+        SHOWING {{ from }} - {{ to }} OF {{ totalItems }}
+      </div>
+      <div class="flex items-center gap-12" aria-label="Pagination">
+        <a (click)="previousPage()" class="hover:text-indigo-600 cursor-pointer">
+          Previous
+        </a>
+        <ul class="flex items-center gap-1 w-[240px] justify-center">
+          <li *ngFor="let page of pages">
+            <div *ngIf="page === '...'; else pageLink">
+              <div class="px-3 py-2 text-gray-500">...</div>
+            </div>
+            <ng-template #pageLink>
+              <a
+                (click)="setCurrentPage(page)"
+                class="px-3 py-2 rounded-lg duration-150 hover:text-white hover:bg-indigo-600 cursor-pointer"
+                [ngClass]="{
+                  'bg-indigo-600 text-white font-medium': page === currentPage
+                }"
+              >
+                {{ page }}
+              </a>
+            </ng-template>
+          </li>
+        </ul>
+        <a (click)="nextPage()" class="hover:text-indigo-600 cursor-pointer">
+          Next
+        </a>
+      </div>
+    </div>
+  
+    <!-- Mobile -->
+    <div class="flex items-center justify-between text-sm text-gray-600 font-medium md:hidden">
+      <a (click)="previousPage()" class="px-4 py-2 border rounded-lg duration-150 hover:bg-gray-50 cursor-pointer">Previous</a>
+      <div class="font-medium">
+        SHOWING {{ from }} - {{ to }} OF {{ totalItems }}
+      </div>
+      <a (click)="nextPage()" class="px-4 py-2 border rounded-lg duration-150 hover:bg-gray-50 cursor-pointer">Next</a>
+    </div>
+  </div>
+  
